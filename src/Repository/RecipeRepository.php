@@ -21,7 +21,30 @@ class RecipeRepository extends ServiceEntityRepository
         parent::__construct($registry, Recipe::class);
     }
 
-    //    /**
+    
+// public function findTotalDuration()
+// {
+//     return $this->createQueryBuilder('r')
+//     ->select('SUM(r.duration) as total ' )
+//     ->getQuery()
+//     ->getResult();
+// }
+
+    // /**
+    
+    //  * @return Recipe[]
+    //  */
+    // public function findWithDurationLowerThan(int $duration): array
+    // {
+    //     return $this->createQueryBuilder('r')
+    //         ->where('r.duration <= :duration')
+    //         ->setParameter('duration', $duration)
+    //         ->orderBy('r.duration', 'ASC')
+    //         ->setMaxResults(10)
+    //         ->getQuery()
+    //         ->getResult();
+    // }
+    // //    /**
     //     * @return Recipe[] Returns an array of Recipe objects
     //     */
     //    public function findByExampleField($value): array

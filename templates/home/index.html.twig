@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
 <h1 class="text-center">Bienvenue sur mon site</h1>
+<div class="container mt-3">
+    <img src="{{asset('assets/images/home.jpg')}}" alt="Image accueil" class="img-fluid">
+</div>
 {% endblock %}

@@ -3,16 +3,37 @@
 {% block title %}Toutes les recettes{% endblock %}
 
 {% block body %}
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure consectetur, laboriosam tenetur animi quidem dolore
-    delectus sit necessitatibus vitae deleniti, quisquam qui aspernatur libero eveniet aliquid ad. Tenetur, quas
-    recusandae?
-</p>
+<h2 class="text-center">LISTE DE TOUTE LES RECETTES</h2>
 
-<ul>
-    {% for recipe in recipes %}
-    <li>
-        <a href="{{path('recipe.show',{id: recipe.id, slug: recipe.slug})}}">{{recipe.title}}</a>
-    </li>
-    {% endfor%}
-</ul>
+<p>
+    <a class="btn btn-primary btn-sm" href="{{path('recipe.create')}}">Créer une recette</a>
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th style="width: 200px;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for recipe in recipes %}
+        <tr>
+            <td>
+                <p>{{recipe.title}}</p>
+            </td>
+            <td>
+                <div class="d-flex gap-1 justify-content-center">
+                    <a class="btn btn-success btn-sm"
+                        href="{{path('recipe.show',{id: recipe.id, slug: recipe.slug})}}">Afficher</a>
+                    <a class="btn btn-primary btn-sm" href="{{path('recipe.edit',{id: recipe.id})}}">Editer</a>
+                    <form action="{{ path('recipe.delete',{id: recipe.id})  }}" method="post">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% endfor%}
+    </tbody>
+</table>
 {% endblock %}
