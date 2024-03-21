@@ -24,8 +24,8 @@
             <td>
                 <div class="d-flex gap-1 justify-content-center">
                     <a class="btn btn-success btn-sm"
-                        href="{{path('recipe.show',{id: recipe.id, slug: recipe.slug})}}"><img src="{{asset('assets/images/icons/eye.svg')}}" alt="icon afficher" class="img-fluid"></a>
-                    <a class="btn btn-primary btn-sm" href="{{path('recipe.edit',{id: recipe.id})}}"><img src="{{asset('assets/images/icons/pencil.svg')}}" alt="icon editer" class="img-fluid"></a>
+                        href="{{path('recipe.show',{id: recipe.id, slug: recipe.slug})}}"><img src="{{asset('asset/images/icons/eye.svg')}}" alt="icon afficher" class="img-fluid"></a>
+                    <a class="btn btn-primary btn-sm" href="{{path('recipe.edit',{id: recipe.id})}}"><img src="{{asset('asset/images/icons/pencil.svg')}}" alt="icon editer" class="img-fluid"></a>
                     <form action="{{ path('recipe.delete',{id: recipe.id})  }}" method="post">
                         <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" class="btn btn-danger btn-sm"><img src="{{asset('assets/images/icons/trash.svg')}}" alt="icon delete" class="img-fluid"></button>
