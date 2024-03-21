@@ -3,6 +3,9 @@
 {% block title "Recette : " ~ recipe.title %}
 
 {% block body %}
+<p>
+   <a class="btn btn-dark btn-sm" href="{{path('recipe.index')}}"><img src="{{asset('assets/images/icons/arrow-left-short.svg')}}" alt="icon retour" class="img-fluid">Retour</a>
+</p>
    <h1>{{ recipe.title }}</h1>
    <p>
       {{ recipe.content | nl2br}}

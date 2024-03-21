@@ -1,0 +1,17 @@
+{% apply inky_to_html %}
+<container>
+    <row class="header">
+        <p class="text-center"> Une nouvelle demande de contact a été reçu!</p
+            <spacer size="16"></spacer>
+            <h3 class="text-center">Bienvenu {{ data.name }}!</h3>
+        </columns>
+    </row>
+<hr>
+    <row>
+        <p><strong>Message</strong>:</p>
+        <p>
+            {{ data.message | nl2br}}
+        </p>
+    </row>
+</container>
+{% endapply %}
