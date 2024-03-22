@@ -8,9 +8,11 @@ use App\Repository\CategoryRepository;
 use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class RecipeController extends AbstractController
 {
@@ -46,12 +48,25 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/recipes/{id}/edit', name: 'recipe.edit', methods: ['GET', 'POST'])]
-    public function edit(Recipe $recipe, Request $request, EntityManagerInterface $em)
+    public function edit(Recipe $recipe, Request $request, EntityManagerInterface $em, UploaderHelper $helper)
     {
+
+        // recuperer le chemin du ficher 
+        // dd($helper->asset($recipe, 'thumbnailFile'));
+
+
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // $recipe->setUpdateAt(new \DateTimeImmutable());
+
+            // $recipe->setUpdatedAt(new \DateTimeImmutable());
+            
+            /** @var UploadedFile $file */
+            $file = $form->get('thumbnailFile')->getData();
+            $fileName = $recipe->getSlug() . '.' . $file->getClientOriginalExtension();
+            $file->move($this->getParameter('kermel.project_dir') . '/public/asset/images/recipes', $fileName);
+            $recipe->setThumbnail($fileName);
+
             $em->flush();
             $this->addFlash('success', 'La recette a bien été modifiée');
             return $this->redirectToRoute('recipe.index');
@@ -70,9 +85,18 @@ class RecipeController extends AbstractController
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
             // $recipe->setCreatedAt(new \DateTimeImmutable());
             // $recipe->setUpdateAt(new \DateTimeImmutable());
+
+            /** @var UploadedFile $file */
+            $file = $form->get('thumbnailFile')->getData();
+            $fileName = $recipe->getSlug() . '.' . $file->getClientOriginalExtension();
+            $file->move($this->getParameter('kermel.project_dir') . '/public/asset/images/recipes', $fileName);
+            $recipe->setThumbnail($fileName);
             $em->persist($recipe);
+            $file->getClientOriginalName();
+            
             $em->flush();
             $this->addFlash('success', 'La recette a bien été créée');
             return $this->redirectToRoute('recipe.index');
@@ -87,7 +111,7 @@ class RecipeController extends AbstractController
     {
         $em->remove($recipe);
         $em->flush();
-        $this->addFlash('success','La recette a bien été supprimée');
+        $this->addFlash('success', 'La recette a bien été supprimée');
         return $this->redirectToRoute('recipe.index');
     }
 }
