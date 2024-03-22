@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Toutes les recettes{% endblock %}
+
+{% block body %}
+<h2 class="text-center">LISTE DE TOUTE LES GATEGORIES</h2>
+
+<p>
+    <a class="btn btn-primary btn-sm" href="{{path('category.create')}}">Ajouter une catégorie</a>
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th style="width: 130px;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categories %}
+        <tr>
+            <td>
+                <p>{{category.name}}</p>
+            </td>
+            <td>
+                <div class="d-flex gap-1 justify-content-center">
+                    <a class="btn btn-primary btn-sm" href="{{path('category.edit',{id: category.id})}}"><img
+                            src="{{asset('asset/images/icons/pencil.svg')}}" alt="icon editer" class="img-fluid"></a>
+                    <form action="{{ path('category.delete',{id: category.id})  }}" method="post">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger btn-sm"><img
+                                src="{{asset('asset/images/icons/trash.svg')}}" alt="icon delete"
+                                class="img-fluid"></button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% endfor%}
+    </tbody>
+</table>
+{% endblock %}

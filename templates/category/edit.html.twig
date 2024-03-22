@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title "Categories : " ~ category.name %}
+
+{% block body %}
+<p>
+    <a class="btn btn-dark btn-sm" href="{{path('category.index')}}"><img src="{{asset('asset/images/icons/arrow-left-short.svg')}}" alt="icon retour" class="img-fluid">Retour</a>
+ </p>
+<h1>{{ category.name }}</h1>
+
+{{ form(form) }}
+
+{% endblock %}
