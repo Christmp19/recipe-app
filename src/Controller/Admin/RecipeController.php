@@ -12,13 +12,16 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
+#[IsGranted('ROLE_ADMIN')]
 class RecipeController extends AbstractController
 {
     #[Route('/recipe', name: "recipe.index")]
     public function index(RecipeRepository $recipeRepository, CategoryRepository $categoryRepository): Response
     {
+        //$this->denyAccessUnlessGranted('ROLE_USER');
         $recipes = $recipeRepository->findAll();
 
         // $recipe = new Recipe();
@@ -59,7 +62,7 @@ class RecipeController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // $recipe->setUpdatedAt(new \DateTimeImmutable());
+            // $recipe->setUpdateddAt(new \DateTimeImmutable());
             
             /** @var UploadedFile $file */
             $file = $form->get('thumbnailFile')->getData();
@@ -87,7 +90,7 @@ class RecipeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             // $recipe->setCreatedAt(new \DateTimeImmutable());
-            // $recipe->setUpdateAt(new \DateTimeImmutable());
+            // $recipe->setUpdatedAt(new \DateTimeImmutable());
 
             /** @var UploadedFile $file */
             $file = $form->get('thumbnailFile')->getData();

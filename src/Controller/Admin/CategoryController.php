@@ -11,16 +11,18 @@ use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-
-
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route("/category", name:'category.')]
+#[IsGranted('ROLE_ADMIN')]
 class CategoryController extends AbstractController
 {
 
     #[Route(name:'index')]
     public function index(CategoryRepository $categoryRepository): Response
     {
+        //$this->denyAccessUnlessGranted('ROLE_USER');
+
         return $this->render('category/index.html.twig', [
             'categories'=> $categoryRepository->findAll()
         ]);
