@@ -11,7 +11,8 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th>Titre</th>
+            <th>Nom</th>
+            <th>Recettes</th>
             <th style="width: 130px;">Action</th>
         </tr>
     </thead>
@@ -21,6 +22,7 @@
             <td>
                 <p>{{category.name}}</p>
             </td>
+            <td>{{ category.count }}</td>
             <td>
                 <div class="d-flex gap-1 justify-content-center">
                     <a class="btn btn-primary btn-sm" href="{{path('category.edit',{id: category.id})}}"><img

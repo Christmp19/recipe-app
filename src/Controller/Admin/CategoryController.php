@@ -24,7 +24,7 @@ class CategoryController extends AbstractController
         //$this->denyAccessUnlessGranted('ROLE_USER');
 
         return $this->render('category/index.html.twig', [
-            'categories'=> $categoryRepository->findAll()
+            'categories'=> $categoryRepository->findAllWhitCount()
         ]);
     }
 
