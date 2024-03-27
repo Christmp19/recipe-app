@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Entity\Recipe;
 use App\Form\RecipeType;
-use App\Repository\CategoryRepository;
 use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,10 +18,19 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 class RecipeController extends AbstractController
 {
     #[Route('/recipe', name: "recipe.index")]
-    public function index(RecipeRepository $recipeRepository, CategoryRepository $categoryRepository): Response
+    public function index(RecipeRepository $recipeRepository, Request $request): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USER');
-        $recipes = $recipeRepository->findAll();
+        $page = $request->query->getInt('page',1);
+        $limit = 2;
+        $recipes = $recipeRepository->paginateRecipes($page, $limit);
+        $maxPage = ceil($recipes->count() / $limit);
+        return $this->render('recipe/index.html.twig', [
+            'recipes' => $recipes,
+            'maxPage' => $maxPage,
+            'page'=> $page
+        ]);
+        //$recipes = $recipeRepository->findAll();
 
         // $recipe = new Recipe();
         // $recipe->setTitle('Burger royal');
@@ -31,9 +39,6 @@ class RecipeController extends AbstractController
         // $em->flush();
 
 
-        return $this->render('recipe/index.html.twig', [
-            'recipes' => $recipes
-        ]);
     }
 
     #[Route('/recipe/{slug}-{id}', name: 'recipe.show', requirements: ['id' => '\d+', 'slug' => '[a-z0-9-]+'])]
